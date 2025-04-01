@@ -6,6 +6,11 @@ from django.urls import reverse
 
 from .models import User
 
+# Import a login_required module
+from django.contrib.auth.decorators import login_required
+
+#Import data from models
+from .models import Category
 
 def index(request):
     return render(request, "auctions/index.html")
@@ -61,3 +66,11 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "auctions/register.html")
+
+#Create a listing
+@login_required
+
+def create(request):
+    return render(request, "auctions/create.html",{
+        "Category":Category.objects.all(),
+    })
